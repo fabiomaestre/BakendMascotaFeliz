@@ -58,6 +58,16 @@ export class Empleado extends Entity {
   foto: string;
 
   @property({
+    type: 'string',
+  })
+  correo: string;
+
+  @property({
+    type: 'string',
+  })
+  contrasena: string;
+
+  @property({
     type: 'array',
     itemType: 'string',
   })

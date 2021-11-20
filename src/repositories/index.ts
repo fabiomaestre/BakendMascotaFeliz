@@ -6,3 +6,5 @@ export * from './pedido.repository';
 export * from './plan.repository';
 export * from './producto.repository';
 export * from './proveedor.repository';
+export * from './detallepedido.repository';
+export * from './detalleplan.repository';

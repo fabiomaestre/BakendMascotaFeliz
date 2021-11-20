@@ -58,6 +58,11 @@ export class Cliente extends Entity {
   telefono2?: string;
 
   @property({
+    type: 'string',
+  })
+  contrasena?: string;
+
+  @property({
     type: 'array',
     itemType: 'string',
   })

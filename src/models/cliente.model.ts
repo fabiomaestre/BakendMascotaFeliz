@@ -1,4 +1,4 @@
-import {Entity, model, property, hasMany} from '@loopback/repository';
+import {Entity, hasMany, model, property} from '@loopback/repository';
 import {Mascota} from './mascota.model';
 
 @model()
@@ -9,18 +9,6 @@ export class Cliente extends Entity {
     generated: true,
   })
   idCliente?: string;
-
-  @property({
-    type: 'string',
-    required: true,
-  })
-  nombre: string;
-
-  @property({
-    type: 'string',
-    required: true,
-  })
-  apellido: string;
 
   @property({
     type: 'string',
@@ -44,12 +32,6 @@ export class Cliente extends Entity {
     type: 'string',
     required: true,
   })
-  correo: string;
-
-  @property({
-    type: 'string',
-    required: true,
-  })
   telefono1: string;
 
   @property({
@@ -57,11 +39,13 @@ export class Cliente extends Entity {
   })
   telefono2?: string;
 
-  @property({
-    type: 'array',
-    itemType: 'string',
-  })
-  listaReferido?: string[];
+
+
+  // @property({
+  //   type: 'array',
+  //  itemType: 'string',
+  // })
+  //listaReferido?: string[];
 
   @hasMany(() => Mascota)
   mascotas: Mascota[];

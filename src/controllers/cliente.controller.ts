@@ -9,10 +9,11 @@ import {
 } from '@loopback/repository';
 import {
   del, get,
-  getModelSchemaRef, param, patch, post, put, requestBody,
+  getModelSchemaRef, HttpErrors, param, patch, post, put, requestBody,
   response
 } from '@loopback/rest';
-import {Cliente} from '../models';
+import {Llaves} from '../config/Llaves';
+import {Cliente, Credenciales} from '../models';
 import {ClienteRepository} from '../repositories';
 import {AutenticacionService} from '../services';
 const fetch = require("node-fetch");
@@ -24,6 +25,34 @@ export class ClienteController {
     @service(AutenticacionService)
     public servicioAutenticacion: AutenticacionService
   ) { }
+
+
+  @post("/identificarCliente", {
+    responses: {
+      '200': {
+        description: "Identificacion de usuarios"
+      }
+    }
+  })
+  async identificarCliente(
+    @requestBody() credenciales: Credenciales
+  ) {
+    let p = await this.servicioAutenticacion.IdentificarCliente(credenciales.usuario, credenciales.contrasena);
+    if (p) {
+      let token = this.servicioAutenticacion.GenerarTokenJWT(p);
+      return {
+        datos: {
+          nombre: p.nombre,
+          correo: p.correo,
+          id: p.idCliente
+        },
+        tk: token
+      }
+    } else {
+      throw new HttpErrors[401]("Datos inválidos");
+    }
+  }
+
 
   @post('/clientes')
   @response(200, {
@@ -43,7 +72,7 @@ export class ClienteController {
     })
     cliente: Omit<Cliente, 'idCliente'>,
   ): Promise<Cliente> {
-    let contrasena = this.servicioAutenticacion.GenerarClave();
+    let contrasena = this.servicioAutenticacion.GenerarContrasena();
     let contrasenaCifrada = this.servicioAutenticacion.CifrarContrasena(contrasena);
     cliente.contrasena = contrasenaCifrada;
     let p = await this.clienteRepository.create(cliente);
@@ -52,8 +81,8 @@ export class ClienteController {
     let correo_destino = cliente.correo;
     let asunto = 'Registro a la plataforma';
     let contenido = `Hola ${cliente.nombre}, su usuario es ${cliente.correo} y su contraseña es ${contrasena}`;
-    fetch(`http://127.0.0.1:5000/envio-correo?correo_destino=${correo_destino}&asunto=${asunto}&contenido=${contenido}`)
-      .then((data:any)=>{
+    fetch(`${Llaves.urlServicioNotificaciones}/envio-correo?correo_destino=${correo_destino}&asunto=${asunto}&contenido=${contenido}`)
+      .then((data: any) => {
         console.log(data);
       })
     return p;

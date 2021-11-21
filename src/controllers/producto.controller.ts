@@ -1,3 +1,4 @@
+import {authenticate} from '@loopback/authentication';
 import {
   Count,
   CountSchema,
@@ -20,6 +21,7 @@ import {
 import {Producto} from '../models';
 import {ProductoRepository} from '../repositories';
 
+@authenticate("admin")
 export class ProductoController {
   constructor(
     @repository(ProductoRepository)
@@ -37,7 +39,7 @@ export class ProductoController {
         'application/json': {
           schema: getModelSchemaRef(Producto, {
             title: 'NewProducto',
-            
+
           }),
         },
       },

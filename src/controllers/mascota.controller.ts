@@ -20,6 +20,7 @@ import {
 import {Mascota} from '../models';
 import {MascotaRepository} from '../repositories';
 
+
 export class MascotaController {
   constructor(
     @repository(MascotaRepository)
@@ -37,7 +38,7 @@ export class MascotaController {
         'application/json': {
           schema: getModelSchemaRef(Mascota, {
             title: 'NewMascota',
-            
+
           }),
         },
       },

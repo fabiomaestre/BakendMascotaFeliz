@@ -1,3 +1,4 @@
+import {authenticate} from '@loopback/authentication';
 import {
   Count,
   CountSchema,
@@ -20,6 +21,7 @@ import {
 import {Empleado} from '../models';
 import {EmpleadoRepository} from '../repositories';
 
+@authenticate("admin")
 export class EmpleadoController {
   constructor(
     @repository(EmpleadoRepository)
@@ -37,7 +39,7 @@ export class EmpleadoController {
         'application/json': {
           schema: getModelSchemaRef(Empleado, {
             title: 'NewEmpleado',
-            
+
           }),
         },
       },

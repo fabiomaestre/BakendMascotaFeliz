@@ -9,3 +9,4 @@ export * from './consulta-vet.model';
 export * from './detallepedido.model';
 export * from './detalleplan.model';
 export * from './credenciales.model';
+export * from './persona.model';

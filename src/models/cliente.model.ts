@@ -14,18 +14,6 @@ export class Cliente extends Entity {
     type: 'string',
     required: true,
   })
-  nombre: string;
-
-  @property({
-    type: 'string',
-    required: true,
-  })
-  apellido: string;
-
-  @property({
-    type: 'string',
-    required: true,
-  })
   direccion: string;
 
   @property({
@@ -44,12 +32,6 @@ export class Cliente extends Entity {
     type: 'string',
     required: true,
   })
-  correo: string;
-
-  @property({
-    type: 'string',
-    required: true,
-  })
   telefono1: string;
 
   @property({
@@ -57,11 +39,7 @@ export class Cliente extends Entity {
   })
   telefono2?: string;
 
-  @property({
-    type: 'string',
-    required: false,
-  })
-  contrasena?: string;
+
 
   // @property({
   //   type: 'array',
